@@ -59,24 +59,17 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }
 
-tasks.register("jacocoTestReport", JacocoReport::class) {
-    dependsOn("testDebugUnitTest") // Для Unit тестов в Android
-
+tasks.register("jacocoTestReportRelease", JacocoReport::class) {
+    dependsOn("testReleaseUnitTest")
     reports {
-        xml.required.set(true)  // Для Codecov/Coveralls
-        html.required.set(true) // Локальный просмотр
+        xml.required.set(true)
+        html.required.set(true)
     }
-
     sourceDirectories.setFrom(files("$projectDir/src/main/java"))
-    classDirectories.setFrom(
-        files(
-            fileTree("$buildDir/tmp/kotlin-classes/debug") {
-                exclude("**/R.class", "**/R\$*.class", "**/BuildConfig.class", "**/Manifest.class")
-            }
-        )
-    )
-    executionData.setFrom(fileTree(buildDir).include("jacoco/testDebugUnitTest.exec"))
+    classDirectories.setFrom(files("$buildDir/tmp/kotlin-classes/release"))
+    executionData.setFrom(fileTree(buildDir).include("jacoco/testReleaseUnitTest.exec"))
 }
+
 
 tasks.register("jacocoTestCoverageVerification", JacocoCoverageVerification::class) {
     dependsOn("jacocoTestReport")
