@@ -21,7 +21,7 @@ jobs:
       - name: Run tests and generate coverage report
         run: |
           ./gradlew clean test jacocoTestReport
-          ls -R build/reports/jacoco/test/
+          ls -R build/reports/jacoco/tests/
 
       - name: Upload coverage to Coveralls
         env:
