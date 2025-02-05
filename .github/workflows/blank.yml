@@ -1,4 +1,4 @@
-name: Coverage Report
+name: SonarCloud Analysis
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  tests:
+  sonarcloud:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,12 +22,7 @@ jobs:
         run: chmod +x gradlew
       - name: Run tests and generate Jacoco report
         run: ./gradlew testDebugUnitTest jacocoTestReportDebug
-      - name: Upload Jacoco report as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: jacoco-report
-          path: jacoco-reports/testDebugUnitTest/
-      - name: Publish to Coveralls
+      - name: SonarCloud Scan
         env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: ./gradlew coverallsJacoco
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew sonarqube

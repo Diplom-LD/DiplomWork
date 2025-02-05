@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("jacoco") // Обычный JaCoCo не работает для Android Unit Test без кастомной задачи
-    id("com.github.nbaztec.coveralls-jacoco") version "1.2.20"
+    id("jacoco")
+    id("org.sonarqube") version "3.3"
 }
 
 android {
@@ -59,36 +59,31 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }
 
-// Настроим задачу для генерации отчета для Debug версии
-tasks.register("jacocoTestReportDebug", JacocoReport::class) {
-    dependsOn("testDebugUnitTest")  // Убедитесь, что тесты выполняются
+tasks.register<JacocoReport>("jacocoTestReportDebug") {
+    dependsOn("testDebugUnitTest")
 
     reports {
         xml.required.set(true)
-        xml.outputLocation.set(file("$rootDir/jacoco-reports/testDebugUnitTest.xml")) // Путь к XML отчету
+        xml.outputLocation.set(file("$rootDir/jacoco-reports/testDebugUnitTest.xml"))
 
         html.required.set(true)
-        html.outputLocation.set(file("$rootDir/jacoco-reports/testDebugUnitTest")) // Папка для HTML отчета
+        html.outputLocation.set(file("$rootDir/jacoco-reports/testDebugUnitTest"))
     }
 
-    // Путь к исходным кодам
     sourceDirectories.setFrom(files("$projectDir/src/main/java"))
     classDirectories.setFrom(files("$buildDir/tmp/kotlin-classes/debug"))
-
-    // Указываем, где брать данные о покрытии
     executionData.setFrom(fileTree(buildDir).include("jacoco/testDebugUnitTest.exec"))
 }
 
-// Настроим задачу для генерации отчета для Release версии
-tasks.register("jacocoTestReportRelease", JacocoReport::class) {
-    dependsOn("testReleaseUnitTest")  // Убедитесь, что тесты выполняются
+tasks.register<JacocoReport>("jacocoTestReportRelease") {
+    dependsOn("testReleaseUnitTest")
 
     reports {
         xml.required.set(true)
-        xml.outputLocation.set(file("$rootDir/jacoco-reports/testReleaseUnitTest.xml")) // Путь к XML отчету
+        xml.outputLocation.set(file("$rootDir/jacoco-reports/testReleaseUnitTest.xml"))
 
         html.required.set(true)
-        html.outputLocation.set(file("$rootDir/jacoco-reports/testReleaseUnitTest")) // Папка для HTML отчета
+        html.outputLocation.set(file("$rootDir/jacoco-reports/testReleaseUnitTest"))
     }
 
     sourceDirectories.setFrom(files("$projectDir/src/main/java"))
@@ -96,9 +91,8 @@ tasks.register("jacocoTestReportRelease", JacocoReport::class) {
     executionData.setFrom(fileTree(buildDir).include("jacoco/testReleaseUnitTest.exec"))
 }
 
-// Настройка проверки покрытия
-tasks.register("jacocoTestCoverageVerification", JacocoCoverageVerification::class) {
-    dependsOn("jacocoTestReportDebug", "jacocoTestReportRelease")  // Проверка для обеих версий
+tasks.register<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
+    dependsOn("jacocoTestReportDebug", "jacocoTestReportRelease")
 
     violationRules {
         rule {
@@ -106,16 +100,27 @@ tasks.register("jacocoTestCoverageVerification", JacocoCoverageVerification::cla
             limit {
                 counter = "LINE"
                 value = "COVEREDRATIO"
-                minimum = "0.8".toBigDecimal()  // Минимальное покрытие 80%
+                minimum = "0.8".toBigDecimal()
             }
         }
     }
 }
 
-// Проверка покрытия на выполнение
 tasks.check {
     dependsOn("jacocoTestCoverageVerification")
 }
-coverallsJacoco {
-    var jacocoReportPath = file("$rootDir/jacoco-reports/testDebugUnitTest/testDebugUnitTest.xml")
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "your_project_key")
+        property("sonar.organization", "your_organization_key")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.login", System.getenv("SONAR_TOKEN"))
+        property("sonar.sources", "src/main/java")
+        property("sonar.tests", "src/test/java")
+        property("sonar.java.binaries", "build/intermediates/classes")
+        property("sonar.java.test.binaries", "build/intermediates/classes/test")
+        property("sonar.java.coveragePlugin", "jacoco")
+        property("sonar.jacoco.reportPaths", "jacoco-reports/testDebugUnitTest/testDebugUnitTest.xml")
+    }
 }
