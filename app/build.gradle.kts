@@ -111,6 +111,7 @@ sonar {
         property("sonar.login", System.getenv("SONAR_TOKEN"))
         property("sonar.sources", "src/main/java")
         property("sonar.tests", "src/test/java")
+        property ("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
         property("sonar.java.binaries", "build/intermediates/classes")
         property("sonar.java.test.binaries", "build/intermediates/classes/test")
         property("sonar.java.coveragePlugin", "jacoco")
