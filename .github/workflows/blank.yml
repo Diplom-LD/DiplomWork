@@ -30,4 +30,5 @@ jobs:
       - name: Run SonarCloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST : "https://sonarcloud.io"
         run: ./gradlew sonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}
