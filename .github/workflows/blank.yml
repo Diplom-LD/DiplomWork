@@ -23,7 +23,7 @@ jobs:
       - name: Run tests and generate Jacoco report
         run: ./gradlew testDebugUnitTest jacocoTestReportDebug
       - name: SonarCloud Scan
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
-        run: ./gradlew sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=your_organization_key -Dsonar.projectKey=your_project_key
+                - name: Build and analyze
+                env:
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                run: ./gradlew build sonar --info
