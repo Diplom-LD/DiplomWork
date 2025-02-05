@@ -107,7 +107,7 @@ sonar {
         property("sonar.projectKey", "MrBlazer335_DiplomWork")
         property("sonar.organization", "mrblazer335")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.login", System.getenv("SONAR_TOKEN"))
+        property("sonar.login", "615ba4ea8986a87bbd850409d8aa075477653c96")
         property("sonar.sources", "src/main/java")
         property("sonar.tests", "src/test/java")
         property(
