@@ -4,7 +4,7 @@ on:
     branches:
       - master
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [ opened, synchronize, reopened ]
 jobs:
   build:
     name: Build and analyze
@@ -18,6 +18,8 @@ jobs:
         with:
           java-version: 17
           distribution: 'oracle' # Alternative distribution options are available
+      - name: Set up Android SDK
+        run: echo "sdk.dir=$HOME/Android/Sdk" >> local.properties
       - name: Cache SonarQube packages
         uses: actions/cache@v4
         with:
@@ -35,4 +37,4 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run:  gradle sonar
+        run: gradle sonar
