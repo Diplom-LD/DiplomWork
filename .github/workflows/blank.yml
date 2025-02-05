@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '23'
-          distribution: 'temurin'  # Используем temurin вместо adoptopenjdk
+          distribution: 'temurin'
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
       - name: Run tests and generate Jacoco report
@@ -30,5 +30,4 @@ jobs:
       - name: Publish to Coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: |
-          ./gradlew coverallsJacoco
+        run: ./gradlew coverallsJacoco

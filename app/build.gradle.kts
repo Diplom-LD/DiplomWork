@@ -116,3 +116,6 @@ tasks.register("jacocoTestCoverageVerification", JacocoCoverageVerification::cla
 tasks.check {
     dependsOn("jacocoTestCoverageVerification")
 }
+coverallsJacoco {
+    var jacocoReportPath = file("$rootDir/jacoco-reports/testDebugUnitTest/testDebugUnitTest.xml")
+}
