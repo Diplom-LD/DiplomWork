@@ -22,17 +22,29 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: Set up Android SDK
+        uses: actions/setup-android@v2
+        with:
+          sdk-version: 'commandlinetools-linux-8512546_latest'
+
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
       - name: Run Tests and Generate Coverage Report
         run: ./gradlew testDebugUnitTest jacocoTestReport
 
+      - name: Check if Jacoco report exists
+        run: |
+          if [ ! -f build/reports/jacoco/jacocoTestReport.xml ]; then
+            echo "Jacoco report not found"
+            exit 1
+          fi
+
       - name: List contents of build directory
-        run: ls -R app/build
+        run: ls -R build
 
       - name: Send Coverage Report to Coveralls
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: app/build/reports/jacoco/jacocoTestReport.xml
+          path-to-lcov: build/reports/jacoco/jacocoTestReport.xml
