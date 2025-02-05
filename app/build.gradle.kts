@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("com.android.application")
@@ -112,9 +111,9 @@ tasks.check {
 
 sonar {
     properties {
-        property ("sonar.projectKey", "MrBlazer335_DiplomWork")
-        property ("sonar.organization", "mrblazer335")
-        property ("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.projectKey", "MrBlazer335_DiplomWork")
+        property("sonar.organization", "mrblazer335")
+        property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.login", System.getenv("SONAR_TOKEN"))
         property("sonar.sources", "src/main/java")
         property("sonar.tests", "src/test/java")
