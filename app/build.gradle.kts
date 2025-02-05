@@ -75,7 +75,7 @@ tasks.register("jacocoTestReportDebug", JacocoReport::class) {
 }
 
 // Настроим задачу для генерации отчета для Release версии
-tasks.register("jacocoTestReportRelease", JacocoReport::class) {
+tasks.register("jacocoTestReport", JacocoReport::class) {
     dependsOn("testReleaseUnitTest")  // Тесты для Release версии
 
     reports {
