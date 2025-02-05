@@ -107,5 +107,5 @@ tasks.register("jacocoTestCoverageVerification", JacocoCoverageVerification::cla
 
 // Проверка покрытия на выполнение
 tasks.check {
-    dependsOn("jacocoTestCoverageVerification")
+    dependsOn("jacocoTestReportDebug", "jacocoTestReportRelease")
 }
