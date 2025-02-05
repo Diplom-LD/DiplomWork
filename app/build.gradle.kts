@@ -4,7 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("jacoco")
-    id("org.sonarqube") version "3.3"
+    id("org.sonarqube") version "6.0.1.5171"
 }
 
 android {
@@ -110,11 +110,11 @@ tasks.check {
     dependsOn("jacocoTestCoverageVerification")
 }
 
-sonarqube {
+sonar {
     properties {
-        property("sonar.projectKey", "MrBlazer335_DiplomWork")
-        property("sonar.organization", "mrblazer335")
-        property("sonar.host.url", "https://sonarcloud.io")
+        property ("sonar.projectKey", "MrBlazer335_DiplomWork")
+        property ("sonar.organization", "mrblazer335")
+        property ("sonar.host.url", "https://sonarcloud.io")
         property("sonar.login", System.getenv("SONAR_TOKEN"))
         property("sonar.sources", "src/main/java")
         property("sonar.tests", "src/test/java")
