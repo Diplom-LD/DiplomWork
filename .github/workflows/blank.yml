@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adoptopenjdk'
+          distribution: 'temurin'  # Используем temurin вместо adoptopenjdk
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
       - name: Run tests and generate Jacoco report
