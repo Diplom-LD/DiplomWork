@@ -22,11 +22,11 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-
       - name: Run Tests and Generate Coverage Report
         run: ./gradlew testDebugUnitTest jacocoTestReport
+
+      - name: List contents of build directory
+        run: ls -R app/build
 
       - name: Send Coverage Report to Coveralls
         uses: coverallsapp/github-action@v2
