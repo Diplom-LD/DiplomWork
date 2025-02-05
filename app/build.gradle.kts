@@ -108,7 +108,7 @@ sonar {
         property ("sonar.projectKey", "MrBlazer335_DiplomWork")
         property ("sonar.organization", "mrblazer335")
         property ("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.login", "removeThis")
+        property("sonar.token", "ae079927d5938258e270e58298dbf5807273581e")
         property("sonar.sources", "src/main/java")
         property("sonar.tests", "src/test/java")
         property(
