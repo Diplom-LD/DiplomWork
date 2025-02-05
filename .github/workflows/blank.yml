@@ -12,17 +12,22 @@ jobs:
   sonarcloud:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 23
-        uses: actions/setup-java@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
         with:
-          java-version: '23'
+          java-version: '21'
           distribution: 'temurin'
+
       - name: Grant execute permission to gradlew
         run: chmod +x gradlew
-      - name: Run tests and generate Jacoco report
-        run: ./gradlew testDebugUnitTest jacocoTestReportDebug
-               - name: Build and analyze
-               env:
-                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-               run: ./gradlew test jacocoTestReport sonar
+
+      - name: Run tests and generate JaCoCo report
+        run: ./gradlew testDebugUnitTest jacocoTestReport
+
+      - name: Run SonarCloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }}
