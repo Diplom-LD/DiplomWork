@@ -22,8 +22,7 @@ jobs:
         run: chmod +x gradlew
       - name: Run tests and generate Jacoco report
         run: ./gradlew testDebugUnitTest jacocoTestReportDebug
-      - name: SonarCloud Scan
-                - name: Build and analyze
-                env:
-                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-                run: ./gradlew test jacocoTestReport sonar
+               - name: Build and analyze
+               env:
+                 SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+               run: ./gradlew test jacocoTestReport sonar
