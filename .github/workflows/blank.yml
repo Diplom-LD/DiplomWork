@@ -21,11 +21,11 @@ jobs:
       - name: Run tests and generate coverage report
         run: |
           ./gradlew clean test jacocoTestReport
-          ls -R build/reports/jacoco/tests/
+          ls -R app/build/reports/jacoco/tests/
 
       - name: Upload coverage to Coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
         run: |
-          ls -R build/reports/jacoco/tests/
+          ls -R app/build/reports/jacoco/tests/
           ./gradlew jacocoTestReportRelease
