@@ -3,10 +3,10 @@ name: Code Coverage
 on:
   push:
     branches:
-      - master  # или другая ветка, в зависимости от твоей структуры
+      - main
   pull_request:
     branches:
-      - master  # или другая ветка, в зависимости от твоей структуры
+      - main
 
 jobs:
   test:
@@ -21,9 +21,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-
-      - name: Grant execute permissions to Gradle
-        run: chmod +x gradlew
 
       - name: Run Tests and Generate Coverage Report
         run: ./gradlew testDebugUnitTest jacocoTestReport
