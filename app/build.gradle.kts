@@ -59,20 +59,40 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }
 
-tasks.register("jacocoTestReportRelease", JacocoReport::class) {
-    dependsOn("testReleaseUnitTest")
+// Настроим задачу для генерации отчета для Debug версии
+tasks.register("jacocoTestReportDebug", JacocoReport::class) {
+    dependsOn("testDebugUnitTest")  // Тесты для Debug версии
+
     reports {
         xml.required.set(true)
         html.required.set(true)
     }
+
+    // Путь к исходным кодам (например, основной код и тесты)
+    sourceDirectories.setFrom(files("$projectDir/src/main/java"))
+    classDirectories.setFrom(files("$buildDir/tmp/kotlin-classes/debug"))
+    executionData.setFrom(fileTree(buildDir).include("jacoco/testDebugUnitTest.exec"))
+}
+
+// Настроим задачу для генерации отчета для Release версии
+tasks.register("jacocoTestReportRelease", JacocoReport::class) {
+    dependsOn("testReleaseUnitTest")  // Тесты для Release версии
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+
+    // Путь к исходным кодам (например, основной код и тесты)
     sourceDirectories.setFrom(files("$projectDir/src/main/java"))
     classDirectories.setFrom(files("$buildDir/tmp/kotlin-classes/release"))
     executionData.setFrom(fileTree(buildDir).include("jacoco/testReleaseUnitTest.exec"))
 }
 
-
+// Настройка проверки покрытия
 tasks.register("jacocoTestCoverageVerification", JacocoCoverageVerification::class) {
-    dependsOn("jacocoTestReport")
+    dependsOn("jacocoTestReportDebug", "jacocoTestReportRelease")  // Проверка для обеих версий
+
     violationRules {
         rule {
             element = "BUNDLE"
@@ -85,6 +105,7 @@ tasks.register("jacocoTestCoverageVerification", JacocoCoverageVerification::cla
     }
 }
 
+// Проверка покрытия на выполнение
 tasks.check {
     dependsOn("jacocoTestCoverageVerification")
 }
