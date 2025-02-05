@@ -59,6 +59,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }
 
+// Настроим задачу для генерации отчета для Debug версии
 tasks.register("jacocoTestReportDebug", JacocoReport::class) {
     dependsOn("testDebugUnitTest")  // Убедитесь, что тесты выполняются
 
@@ -78,6 +79,7 @@ tasks.register("jacocoTestReportDebug", JacocoReport::class) {
     executionData.setFrom(fileTree(buildDir).include("jacoco/testDebugUnitTest.exec"))
 }
 
+// Настроим задачу для генерации отчета для Release версии
 tasks.register("jacocoTestReportRelease", JacocoReport::class) {
     dependsOn("testReleaseUnitTest")  // Убедитесь, что тесты выполняются
 
@@ -110,6 +112,7 @@ tasks.register("jacocoTestCoverageVerification", JacocoCoverageVerification::cla
     }
 }
 
+// Проверка покрытия на выполнение
 tasks.check {
     dependsOn("jacocoTestCoverageVerification")
 }
