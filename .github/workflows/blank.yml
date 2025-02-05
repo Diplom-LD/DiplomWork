@@ -22,18 +22,26 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Set up Android SDK
+      - name: Install Android SDK Command Line Tools
         run: |
           sudo apt-get update -y
           sudo apt-get install -y wget unzip
           wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
-          unzip commandlinetools-linux-8512546_latest.zip
-          sudo mv cmdline-tools /usr/local/android-sdk
+          unzip commandlinetools-linux-8512546_latest.zip -d android-sdk
+          sudo mv android-sdk /usr/local/android-sdk
+
+      - name: Set up Android SDK environment variables
+        run: |
           echo "export ANDROID_HOME=/usr/local/android-sdk" >> ~/.bashrc
           echo "export PATH=\$PATH:/usr/local/android-sdk/cmdline-tools/latest/bin" >> ~/.bashrc
           source ~/.bashrc
-          yes | sdkmanager --licenses
-          sdkmanager "platform-tools" "build-tools;30.0.3" "platforms;android-30"
+
+      - name: Accept Android SDK licenses
+        run: yes | /usr/local/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+
+      - name: Install necessary Android SDK packages
+        run: |
+          /usr/local/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "build-tools;30.0.3" "platforms;android-30"
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
