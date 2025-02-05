@@ -112,8 +112,8 @@ tasks.check {
 
 sonarqube {
     properties {
-        property("sonar.projectKey", "your_project_key")
-        property("sonar.organization", "your_organization_key")
+        property("sonar.projectKey", "MrBlazer335_DiplomWork")
+        property("sonar.organization", "c6f799c1f5621a5a043f381b766e60a9c76e3fc9")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.login", System.getenv("SONAR_TOKEN"))
         property("sonar.sources", "src/main/java")
