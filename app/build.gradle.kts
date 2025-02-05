@@ -63,10 +63,7 @@ tasks.register<JacocoReport>("jacocoTestReportDebug") {
 
     reports {
         xml.required.set(true)
-        xml.outputLocation.set(file("$rootDir/jacoco-reports/testDebugUnitTest.xml"))
-
-        html.required.set(true)
-        html.outputLocation.set(file("$rootDir/jacoco-reports/testDebugUnitTest"))
+        html.required.set(false)
     }
 
     sourceDirectories.setFrom(files("$projectDir/src/main/java"))
@@ -74,15 +71,12 @@ tasks.register<JacocoReport>("jacocoTestReportDebug") {
     executionData.setFrom(fileTree(buildDir).include("jacoco/testDebugUnitTest.exec"))
 }
 
-tasks.register<JacocoReport>("jacocoTestReportRelease") {
+tasks.register<JacocoReport>("jacocoTestReport") {
     dependsOn("testReleaseUnitTest")
 
     reports {
         xml.required.set(true)
-        xml.outputLocation.set(file("$rootDir/jacoco-reports/testReleaseUnitTest.xml"))
-
-        html.required.set(true)
-        html.outputLocation.set(file("$rootDir/jacoco-reports/testReleaseUnitTest"))
+        html.required.set(false)
     }
 
     sourceDirectories.setFrom(files("$projectDir/src/main/java"))
@@ -123,3 +117,4 @@ sonar {
         property("sonar.jacoco.reportPaths", "jacoco-reports/testDebugUnitTest/testDebugUnitTest.xml")
     }
 }
+
