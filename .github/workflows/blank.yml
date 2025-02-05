@@ -25,4 +25,5 @@ jobs:
       - name: SonarCloud Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew sonarqube
+          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+        run: ./gradlew sonarqube -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=your_organization_key -Dsonar.projectKey=your_project_key

@@ -113,7 +113,7 @@ tasks.check {
 sonarqube {
     properties {
         property("sonar.projectKey", "MrBlazer335_DiplomWork")
-        property("sonar.organization", "c6f799c1f5621a5a043f381b766e60a9c76e3fc9")
+        property("sonar.organization", "randomKey")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.login", System.getenv("SONAR_TOKEN"))
         property("sonar.sources", "src/main/java")
