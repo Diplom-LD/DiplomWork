@@ -1,4 +1,3 @@
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -31,8 +30,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
@@ -111,11 +110,17 @@ sonar {
         property("sonar.login", System.getenv("SONAR_TOKEN"))
         property("sonar.sources", "src/main/java")
         property("sonar.tests", "src/test/java")
-        property ("sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
+        property(
+            "sonar.coverage.jacoco.xmlReportPaths",
+            "${project.buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+        )
         property("sonar.java.binaries", "build/intermediates/classes")
         property("sonar.java.test.binaries", "build/intermediates/classes/test")
         property("sonar.java.coveragePlugin", "jacoco")
-        property("sonar.jacoco.reportPaths", "jacoco-reports/testDebugUnitTest/testDebugUnitTest.xml")
+        property(
+            "sonar.jacoco.reportPaths",
+            "${project.buildDir}/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+        )
     }
 }
 
