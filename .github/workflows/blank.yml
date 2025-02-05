@@ -3,10 +3,10 @@ name: Code Coverage
 on:
   push:
     branches:
-      - main
+      - main  # или другая ветка, в зависимости от твоей структуры
   pull_request:
     branches:
-      - main
+      - main  # или другая ветка, в зависимости от твоей структуры
 
 jobs:
   test:
@@ -27,12 +27,6 @@ jobs:
 
       - name: Run Tests and Generate Coverage Report
         run: ./gradlew testDebugUnitTest jacocoTestReport
-
-      - name: Upload JaCoCo Report as Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: jacoco-report
-          path: app/build/reports/jacoco/jacocoTestReport/html
 
       - name: Send Coverage Report to Coveralls
         uses: coverallsapp/github-action@v2
