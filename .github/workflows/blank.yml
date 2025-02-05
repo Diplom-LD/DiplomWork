@@ -9,55 +9,13 @@ on:
       - master
 
 jobs:
-  test:
+  tests:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v3
+      - uses: actions/checkout@v2
         with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Install Android SDK
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y wget unzip
-          wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
-          unzip commandlinetools-linux-8512546_latest.zip -d android-sdk
-          sudo mv android-sdk /usr/local/android-sdk
-          echo "export ANDROID_HOME=/usr/local/android-sdk" >> ~/.bashrc
-          echo "export PATH=\$PATH:/usr/local/android-sdk/cmdline-tools/latest/bin" >> ~/.bashrc
-          source ~/.bashrc
-
-      - name: Accept Android SDK licenses
-        run: yes | /usr/local/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
-
-      - name: Install necessary Android SDK packages
-        run: |
-          /usr/local/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "build-tools;30.0.3" "platforms;android-30"
-
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-
-      - name: Run Tests and Generate Coverage Report
-        run: ./gradlew testDebugUnitTest jacocoTestReport
-
-      - name: Check if Jacoco report exists
-        run: |
-          if [ ! -f build/reports/jacoco/jacocoTestReport.xml ]; then
-            echo "Jacoco report not found"
-            exit 1
-          fi
-
-      - name: List contents of build directory
-        run: ls -R build
-
-      - name: Send Coverage Report to Coveralls
-        uses: coverallsapp/github-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: build/reports/jacoco/jacocoTestReport.xml
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: test and publish coverage
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        run: ./gradlew test jacocoTestReport coverallsJacoco
