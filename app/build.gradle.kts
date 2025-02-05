@@ -71,7 +71,7 @@ tasks.register<JacocoReport>("jacocoTestReportDebug") {
     executionData.setFrom(fileTree(buildDir).include("jacoco/testDebugUnitTest.exec"))
 }
 
-tasks.register<JacocoReport>("jacocoTestReport") {
+tasks.register<JacocoReport>("jacocoTestReportRelease") {
     dependsOn("testReleaseUnitTest")
 
     reports {
@@ -124,4 +124,3 @@ sonar {
         )
     }
 }
-
