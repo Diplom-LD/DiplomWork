@@ -44,9 +44,12 @@ android {
 }
 
 dependencies {
-    implementation ("org.apache.commons:commons-compress:1.26.0")
+    implementation("org.apache.commons:commons-compress:1.26.0")
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.squareup.retrofit2:retrofit:2.1.0")
+    implementation("com.google.code.gson:gson:2.6.2")
+    implementation("com.squareup.retrofit2:converter-gson:2.1.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
@@ -54,6 +57,7 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.8.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.8.6")
     testImplementation("junit:junit:4.13.2")
+
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 }
@@ -105,9 +109,9 @@ tasks.check {
 
 sonar {
     properties {
-        property ("sonar.projectKey", "MrBlazer335_DiplomWork")
-        property ("sonar.organization", "mrblazer335")
-        property ("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.projectKey", "MrBlazer335_DiplomWork")
+        property("sonar.organization", "mrblazer335")
+        property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.token", "ae079927d5938258e270e58298dbf5807273581e")
         property("sonar.sources", "src/main/java")
         property("sonar.tests", "src/test/java")
