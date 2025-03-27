@@ -33,18 +33,12 @@ class RegisterActivity : AppCompatActivity() {
         val password = etPassword.text.toString()
 
         CoroutineScope(Dispatchers.IO).launch {
-            val response = RetrofitClient.apiService.register(User(email, password))
+            val response = ApiService.register(User(email, password))
             withContext(Dispatchers.Main) {
-                if (response.isSuccessful && response.body()?.success == true) {
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Registration Successful",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    finish()
+                if (response != null) {
+                    Toast.makeText(this@RegisterActivity, "Registration successful", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this@RegisterActivity, "Registration Failed", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this@RegisterActivity, "Registration failed", Toast.LENGTH_SHORT).show()
                 }
             }
         }

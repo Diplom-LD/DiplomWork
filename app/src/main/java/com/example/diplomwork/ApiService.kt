@@ -1,27 +1,47 @@
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Body
-import retrofit2.http.POST
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
+import io.ktor.serialization.gson.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-interface ApiService {
-    @POST("auth/sign-up")
-    suspend fun register(@Body user: User): Response<ApiResponse>
+object ApiService {
+    private val client = HttpClient(CIO) {
+        install(ContentNegotiation) {
+            gson()
+        }
+    }
 
-    @POST("/auth/login")
-    suspend fun login(@Body user: User): Response<ApiResponse>
+    private const val BASE_URL = "http://10.0.2.2:5001/auth"
+
+    suspend fun register(user: User): ApiResponse? {
+        return try {
+            client.post("$BASE_URL/sign-up") {
+                setBody(user)
+            }.body()
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    suspend fun login(user: User): ApiResponse? {
+        return try {
+            client.post("$BASE_URL/sign-in") {
+                contentType(ContentType.Application.Json)
+                setBody(user)
+            }
+                .body()
+        } catch (e: Exception) {
+            null
+        }
+    }
 }
 
 // Data models
-data class User(val email: String, val password: String)
-data class ApiResponse(val success: Boolean, val message: String)
-
-// Retrofit instance
-object RetrofitClient {
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://localhost:5001")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
-    val apiService: ApiService = retrofit.create(ApiService::class.java)
-}
+data class User(val identifier: String, val password: String)
+data class ApiResponse(val accessToken: String)
