@@ -5,7 +5,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiService {
-    @POST("/auth/register")
+    @POST("auth/sign-up")
     suspend fun register(@Body user: User): Response<ApiResponse>
 
     @POST("/auth/login")
@@ -19,7 +19,7 @@ data class ApiResponse(val success: Boolean, val message: String)
 // Retrofit instance
 object RetrofitClient {
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://your-api-url.com")
+        .baseUrl("https://localhost:5001")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

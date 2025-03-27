@@ -1,13 +1,17 @@
 <resources>
-  <string name="app_name">DiplomWork</string>
-  <string name="navigation_drawer_open">Open navigation drawer</string>
-  <string name="navigation_drawer_close">Close navigation drawer</string>
-  <string name="nav_header_title">Android Studio</string>
-  <string name="nav_header_subtitle">android.studio@android.com</string>
-  <string name="nav_header_desc">Navigation header</string>
-  <string name="action_settings">Settings</string>
-
-  <string name="menu_home">Home</string>
-  <string name="menu_gallery">Gallery</string>
-  <string name="menu_slideshow">Slideshow</string>
+    <string name="app_name">Client App</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="welcome_string">Welcome!</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="orders_message">Orders</string>
+    <string name="add_order">Add Order</string>
 </resources>
